@@ -1,9 +1,8 @@
 # Node Broadcast
 
-This library is an adaptation of PureMVC to angular.
-You do not have to use all responsibilities in the ViewController anymore,
-adopt the concepts of PureMVC framework creating Mediators, Proxies,
-Commands and others patterns of your preference.
+This library is an adaptation of PureMVC using node events.
+Get better architecture in your javascript applications by
+creating Models, Commands, Mediators and Proxys.
 
 ## Getting Started
 
