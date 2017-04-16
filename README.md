@@ -12,7 +12,7 @@ The example of this project was generated with [Angular CLI](https://github.com/
 ## Install
 
 ```
-npm install angular-notified --save
+npm install node-broadcast --save
 ```
 
 ## License
