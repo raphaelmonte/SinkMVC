@@ -1,6 +1,6 @@
 {
   "name": "node-broadcast",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Notification framework using Node EventEmitter",
   "main": "index.js",
   "scripts": {
