@@ -1,13 +1,12 @@
-import {OnDestroy} from "@angular/core";
 import {Facade} from "./facade";
 
-export class Mediator implements OnDestroy {
+export class Mediator {
 
-    private listNotificationInterests: string[];
+    private listeners: string[];
 
     constructor() {
 
-        this.listNotificationInterests = [];
+        this.listeners = [];
         this.handleNotification();
 
     }
@@ -18,7 +17,7 @@ export class Mediator implements OnDestroy {
 
     public addEventListener(notificationName: string, listener: Function): void {
 
-        this.listNotificationInterests.push(notificationName);
+        this.listeners.push(notificationName);
 
         Facade.addEventListener(notificationName, listener);
 
@@ -30,10 +29,9 @@ export class Mediator implements OnDestroy {
 
     }
 
-    public ngOnDestroy(): void {
+    public removeAllListeners(): void {
 
-        console.log(this.listNotificationInterests);
-        this.listNotificationInterests.forEach((notificationName: string) => {
+        this.listeners.forEach((notificationName: string) => {
             Facade.removeEventListener(notificationName);
         });
 
