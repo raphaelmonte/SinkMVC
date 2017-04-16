@@ -1,7 +1,7 @@
 {
   "name": "node-broadcast",
   "version": "0.0.5",
-  "description": "Notification framework using Node EventEmitter",
+  "description": "MVC library using node events. Get better architecture in your javascript applications by creating Models, Commands, Mediators and Proxys.",
   "main": "index.js",
   "scripts": {
     "watch": "ntsc -p src -w",
@@ -12,9 +12,9 @@
     "url": "git+https://github.com/raphaelmonte/node-broadcast.git"
   },
   "keywords": [
-    "mvc-ns",
+    "node",
+    "broadcast",
     "notification",
-    "system",
     "mvc",
     "typescript"
   ],
