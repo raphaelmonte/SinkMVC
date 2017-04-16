@@ -1,4 +1,4 @@
-# Angular Notified
+# Node Broadcast
 
 This library is an adaptation of PureMVC to angular.
 You do not have to use all responsibilities in the ViewController anymore,
