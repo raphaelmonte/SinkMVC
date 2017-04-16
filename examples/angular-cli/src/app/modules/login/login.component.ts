@@ -1,18 +1,18 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
-import {Mediator} from "node-broadcast";
 
 import {LoginNotifications} from "./shared/notifications/login.notification";
 import {User} from "../../shared/models/user/user.model";
 import {AuthenticationService} from "../../shared/services/authentication.service";
+import {ViewController} from "../../shared/base/view-controller";
 
 @Component({
     selector: 'login',
     templateUrl: 'login.component.html',
-    styleUrls: ['login.component.scss'],
+    styleUrls: ['login.component.scss']
 })
 
-export class LoginComponent extends Mediator {
+export class LoginComponent extends ViewController {
 
     private user: User;
     private router: Router;
@@ -39,6 +39,7 @@ export class LoginComponent extends Mediator {
     private onSuccessLogin(): void {
 
         console.log('onSuccessLogin');
+        this.router.navigate(['/home']);
         
     }
     

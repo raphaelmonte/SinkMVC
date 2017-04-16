@@ -19,7 +19,7 @@ export class Mediator {
 
         this.listeners.push(notificationName);
 
-        Facade.addEventListener(notificationName, listener);
+        Facade.addEventListener(notificationName, listener.bind(this));
 
     }
 

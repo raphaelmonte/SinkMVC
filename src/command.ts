@@ -2,7 +2,7 @@ import {Facade} from "./facade";
 
 export class Command {
 
-    private nofiticationName: string;
+    private notificationName: string;
     
     constructor() {}
 
@@ -12,9 +12,9 @@ export class Command {
 
     }
 
-    public setNotificationName(nofiticationName: string): void {
+    public setNotificationName(notificationName: string): void {
 
-        this.nofiticationName = nofiticationName;
+        this.notificationName = notificationName;
 
     }
     
@@ -22,19 +22,19 @@ export class Command {
 
     }
 
-    public addEventListener(nofiticationName: string, listener: Function): void {
+    public addEventListener(notificationName: string, listener: Function): void {
 
-        if(this.nofiticationName == nofiticationName) {
+        if(this.notificationName == notificationName) {
 
-            Facade.addEventListener(nofiticationName, listener);
-            
+            Facade.addEventListener(notificationName, listener.bind(this));
+
         }
         
     }
 
-    public sendNotification(notification: string, params: any): void {
+    public sendNotification(notificationName: string, params: any): void {
 
-        Facade.sendNotification(notification, params);
+        Facade.sendNotification(notificationName, params);
 
     }
 
