@@ -24,7 +24,7 @@ export class Mediator implements OnDestroy {
 
     }
 
-    public sendNotification(notificationName: string, params: any): void {
+    public sendNotification(notificationName: string, params: any = null): void {
 
         Facade.sendNotification(notificationName, params);
 
