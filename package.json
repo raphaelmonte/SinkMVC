@@ -1,0 +1,35 @@
+{
+  "name": "node-broadcast",
+  "version": "0.0.3",
+  "description": "Notification framework using Node EventEmitter",
+  "main": "index.js",
+  "scripts": {
+    "watch": "ntsc -p src -w",
+    "build": "ntsc -p src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raphaelmonte/node-broadcast.git"
+  },
+  "keywords": [
+    "mvc-ns",
+    "notification",
+    "system",
+    "mvc",
+    "typescript"
+  ],
+  "author": "raphaelmontesantos@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raphaelmonte/node-broadcast/issues"
+  },
+  "homepage": "https://github.com/raphaelmonte/node-broadcast#readme",
+  "devDependencies": {
+    "@types/node": "^7.0.12",
+    "typescript": "^1.8.10",
+    "ntsc": "^0.2.0"
+  },
+  "dependencies": {
+    "events": "^1.1.1"
+  }
+}
