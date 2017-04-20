@@ -1,17 +1,16 @@
+import {Command} from "node-broadcast";
+
 import {LoginNotifications} from "../../notifications/login.notification";
 import {LoginProxy} from "../../models/login.proxy";
-import {AuthenticationService} from "../../../../../shared/services/authentication.service";
 import {User} from "../../../../../shared/models/user/user.model";
-import {Facade, Command} from "node-broadcast";
 
 export class LoginCommand extends Command {
-
-    private proxy: LoginProxy;
 
     constructor() {
         super();
     }
 
+    /** @override */
     public static listNotificationInterests(): string[] {
 
         return [
@@ -21,18 +20,12 @@ export class LoginCommand extends Command {
 
     }
 
-    //@override
+    /** @override */
     public execute(): void {
 
-        this.proxy = Facade.getProxy(LoginProxy) as LoginProxy;
+        let proxy: LoginProxy = new LoginProxy();
 
-        this.addEventListener(LoginNotifications.SET_SERVICE, (authentication: AuthenticationService) => {
-            this.proxy.setService(authentication);
-        });
-
-        this.addEventListener(LoginNotifications.LOGIN, (user: User) => {
-            this.proxy.login(user);
-        });
+        this.addListener(LoginNotifications.LOGIN, (user: User) => proxy.login(user));
 
     }
 

@@ -1,10 +1,6 @@
-import {Component} from "@angular/core";
-import {Router} from "@angular/router";
-
-import {LoginNotifications} from "./shared/notifications/login.notification";
-import {User} from "../../shared/models/user/user.model";
-import {AuthenticationService} from "../../shared/services/authentication.service";
-import {ViewController} from "../../shared/base/view-controller";
+import {Component, ViewChild} from "@angular/core";
+import {LoginMediator} from "./shared/mediators/login.mediator";
+import {LoginFormComponent} from "./form/form.component";
 
 @Component({
     selector: 'login',
@@ -12,46 +8,24 @@ import {ViewController} from "../../shared/base/view-controller";
     styleUrls: ['login.component.scss']
 })
 
-export class LoginComponent extends ViewController {
+export class LoginComponent {
 
-    private user: User;
-    private router: Router;
+    private loginMediator: LoginMediator;
 
-    constructor(authenticationService: AuthenticationService, router: Router) {
+    @ViewChild(LoginFormComponent) loginFormComponent: LoginFormComponent;
 
-        super();
-
-        this.router = router;
-        this.user = new User();
-
-        this.sendNotification(LoginNotifications.SET_SERVICE, authenticationService);
-
-    }
-
-    //@override
-    public handleNotification(): void {
-
-        this.addEventListener(LoginNotifications.SUCCESS_LOGIN, this.onSuccessLogin);
-        this.addEventListener(LoginNotifications.FAILURE_LOGIN, this.onFailureLogin);
-        
-    }
-
-    private onSuccessLogin(): void {
-
-        console.log('onSuccessLogin');
-        this.router.navigate(['/home']);
-        
-    }
+    constructor() {}
     
-    private onFailureLogin(): void {
+    public ngOnInit(): void {
 
-        //TODO: show message failure login
+        this.loginMediator = new LoginMediator();
+        this.loginMediator.setComponent(this.loginFormComponent);
 
     }
 
-    public login(): void {
+    public ngOnDestroy(): void {
 
-        this.sendNotification(LoginNotifications.LOGIN, this.user);
+        this.loginMediator.removeAllListeners();
 
     }
 

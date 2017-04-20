@@ -17,7 +17,7 @@ export class Notifications {
 
     }
 
-    public addEventListener(notificationName: string, listener: Function): void {
+    public addListener(notificationName: string, listener: Function): void {
 
         if(!this.getNotification(notificationName)) {
 
@@ -40,7 +40,7 @@ export class Notifications {
         
     }
     
-    public removeEventListener(notificationName: string): void {
+    public removeListener(notificationName: string): void {
 
         let listeners: Function[] = this.getNotification(notificationName);
         if(listeners) {
@@ -51,7 +51,7 @@ export class Notifications {
 
     }
 
-    public removeAllEventListeners(): void {
+    public removeAllListeners(): void {
 
         this.eventEmitter.removeAllListeners();
 

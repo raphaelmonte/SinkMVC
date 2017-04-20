@@ -2,13 +2,17 @@ import {CommandMap} from "./command.map";
 import {IProxy} from "./proxy.interface";
 import {ProxyMap} from "./proxy.map";
 import {Notifications} from "./notification";
+import {ServiceMap} from "./service.map";
+import {IService} from "./service.interface";
 
 export class Facade {
 
     public static notification: Notifications = new Notifications();
     public static commandMaps: CommandMap[] = [];
+    public static serviceMaps: ServiceMap[] = [];
     public static proxyMaps: ProxyMap[] = [];
 
+    //Commands
     public static registerCommand(commandClassRef: any): void {
 
         if(!this.getCommand(commandClassRef)) {
@@ -34,6 +38,121 @@ export class Facade {
         
     }
 
+    private static getCommandMap(commandClassRef: any): CommandMap {
+
+        for(let i: number = 0 ; i < this.commandMaps.length ; i++) {
+            if(this.commandMaps[i].name == commandClassRef.name) {
+                return this.commandMaps[i];
+            }
+        }
+
+        return null;
+
+    }
+
+    //Proxy
+    public static registerProxy(proxy: any): void {
+
+        if(!this.getProxyMap(proxy)) {
+
+            let proxyMap: ProxyMap = new ProxyMap();
+            let serviceName: string = proxy.constructor.name;
+            let instance: IService = proxy;
+
+            if(typeof proxy != "object") {
+                serviceName = proxy.name;
+                instance = new proxy();
+            }
+
+            proxyMap.name = serviceName;
+            proxyMap.instance = instance;
+
+            this.proxyMaps.push(proxyMap);
+
+        }
+
+    }
+
+    public static getProxy(proxy: any): IProxy {
+
+        let proxyMap: ProxyMap = this.getProxyMap(proxy);
+        if(proxyMap) {
+            return proxyMap.instance;
+        }
+
+        return null;
+        
+    }
+
+    private static getProxyMap(proxy: any): ProxyMap {
+
+        let proxyName: string = proxy.constructor.name;
+        if(typeof proxy != "object") {
+            proxyName = proxy.name;
+        }
+
+        for(let i: number = 0 ; i < this.proxyMaps.length ; i++) {
+            if(this.proxyMaps[i].name == proxyName) {
+                return this.proxyMaps[i];
+            }
+        }
+
+        return null;
+
+    }
+
+    //Services
+    public static registerService(service: any): void {
+
+        if(!this.getServiceMap(service)) {
+
+            let serviceMap: ServiceMap = new ServiceMap();
+            let serviceName: string = service.constructor.name;
+            let instance: IService = service;
+
+            if(typeof service != "object") {
+                serviceName = service.name;
+                instance = new service();
+            }
+
+            serviceMap.name = serviceName;
+            serviceMap.instance = instance;
+
+            this.serviceMaps.push(serviceMap);
+
+        }
+
+    }
+
+    public static getService(service: any): any {
+
+        let serviceMap: ServiceMap = this.getServiceMap(service);
+        if(serviceMap) {
+            return serviceMap.instance;
+        }
+
+        return null;
+
+    }
+
+    private static getServiceMap(service: any): ServiceMap {
+
+        let serviceName: string = service.constructor.name;
+        if(typeof service != "object") {
+            serviceName = service.name;
+        }
+
+        for(let i: number = 0 ; i < this.serviceMaps.length ; i++) {
+            if(this.serviceMaps[i].name == serviceName) {
+                return this.serviceMaps[i];
+            }
+        }
+
+        return null;
+
+    }
+
+    //Broadcast
     public static sendNotification(notificationName: string, params: any): void {
 
         let notificationInterests: string[] = [];
@@ -56,82 +175,27 @@ export class Facade {
         this.notification.sendNotification(notificationName, params);
 
         notificationInterests.forEach((notificationName: string) => {
-            this.notification.removeEventListener(notificationName);
+            this.notification.removeListener(notificationName);
         });
 
     }
 
-    public static addEventListener(notificationName: string, listener: Function): void {
+    public static addListener(notificationName: string, listener: Function): void {
 
-        this.notification.addEventListener(notificationName, listener);
-
-    }
-
-    public static removeEventListener(notificationName: string): void {
-
-        this.notification.removeEventListener(notificationName);
+        this.notification.addListener(notificationName, listener);
 
     }
 
-    public static removeAllEventListeners(): void {
+    public static removeListener(notificationName: string): void {
 
-        this.notification.removeAllEventListeners();
-
-    }
-
-    public static registerProxy(proxyClassRef: any): void {
-
-        if(!this.getProxyMap(proxyClassRef)) {
-
-            let proxyMap = new ProxyMap();
-            proxyMap.name = proxyClassRef.name;
-            proxyMap.instance = new proxyClassRef() as IProxy;
-
-            this.proxyMaps.push(proxyMap);
-
-        }
+        this.notification.removeListener(notificationName);
 
     }
 
-    public static getProxy(proxyClassRef: Function): IProxy {
+    public static removeAllListeners(): void {
 
-        let proxyMap = this.getProxyMap(proxyClassRef);
-
-        if(!proxyMap) {
-
-            this.registerProxy(proxyClassRef);
-            return this.getProxy(proxyClassRef);
-
-        }
-        
-        return proxyMap.instance;
-        
-    }
-
-    private static getProxyMap(proxyClassRef: any): ProxyMap {
-
-        for(let i: number = 0 ; i < this.proxyMaps.length ; i++) {
-            if(this.proxyMaps[i].name == proxyClassRef.name) {
-                return this.proxyMaps[i];
-            }
-        }
-
-        return null;
+        this.notification.removeAllListeners();
 
     }
-
-    private static getCommandMap(commandClassRef: any): CommandMap {
-
-        for(let i: number = 0 ; i < this.commandMaps.length ; i++) {
-            if(this.commandMaps[i].name == commandClassRef.name) {
-                return this.commandMaps[i];
-            }
-        }
-
-        return null;
-
-    }
-
-
 
 }

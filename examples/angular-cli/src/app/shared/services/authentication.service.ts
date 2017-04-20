@@ -1,18 +1,16 @@
-import {Injectable}    from '@angular/core';
-import {Headers, Http} from '@angular/http';
+import {Http} from '@angular/http';
 import {User} from "../models/user/user.model";
 import {Observable} from "rxjs/Rx";
+import {Injectable} from "@angular/core";
 
 @Injectable()
 export class AuthenticationService {
 
     private http: Http;
-    private headers: Headers;
 
     constructor(http: Http) {
 
         this.http = http;
-        this.headers = new Headers();
 
     }
 

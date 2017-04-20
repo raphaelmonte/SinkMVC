@@ -1,14 +1,21 @@
 import {Facade} from "./facade";
+import {Broadcast} from "./broadcast";
 
-export class Command {
+export class Command extends Broadcast {
 
     private notificationName: string;
     
-    constructor() {}
+    constructor() {
+        super();
+    }
 
     public static listNotificationInterests(): string[] {
 
         return [];
+
+    }
+
+    public execute(): void {
 
     }
 
@@ -17,25 +24,16 @@ export class Command {
         this.notificationName = notificationName;
 
     }
-    
-    public execute(): void {
 
-    }
-
-    public addEventListener(notificationName: string, listener: Function): void {
+    /** override */
+    public addListener(notificationName: string, listener: Function): void {
 
         if(this.notificationName == notificationName) {
 
-            Facade.addEventListener(notificationName, listener.bind(this));
+            Facade.addListener(notificationName, listener.bind(this));
 
         }
         
-    }
-
-    public sendNotification(notificationName: string, params: any): void {
-
-        Facade.sendNotification(notificationName, params);
-
     }
 
 }
