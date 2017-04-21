@@ -71,11 +71,7 @@ export class Facade {
 
             if(typeof proxy != "object") {
                 serviceName = proxy.name;
-                instance = new proxy();
-                
-                if(realSubject) {
-                    instance = new proxy(realSubject);
-                }
+                instance = new proxy(realSubject);
             }
 
             proxyMap.name = serviceName;
