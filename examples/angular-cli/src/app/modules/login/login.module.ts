@@ -34,7 +34,7 @@ export class LoginModule {
         Facade.registerProxy(LoginProxy);
 
         //register commands
-        Facade.registerCommand(LoginCommand, LoginNotifications.LOGIN);
+        Facade.registerCommand(LoginNotifications.LOGIN, LoginCommand);
 
     }
      

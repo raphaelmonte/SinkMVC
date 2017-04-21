@@ -34,7 +34,6 @@ export class LoginMediator extends Mediator implements IMediator {
 
     private onSuccessLogin(): void {
 
-        // this.loginFormComponent.usuario.id_usuario
         console.log('onSuccessLogin');
         //TODO: onSuccessLogin
 
