@@ -1,60 +1,24 @@
-import * as events from "events";
+import {INotification} from "./notification.interface";
 
-export class Notifications {
+export class Notification implements INotification {
 
-    private eventEmitter: events.EventEmitter;
-    public notifications: { [notification: string]: Function[] } = {};
+    private name: string;
+    private body: any;
 
-    constructor() {
-
-        this.eventEmitter = new events.EventEmitter();
-
+    public setName(name: string): void {
+        this.name = name;
     }
 
-    private getNotification(notification: string): Function[] {
-
-        return this.notifications[notification];
-
+    public getName(): string {
+        return this.name;
     }
 
-    public addListener(notificationName: string, listener: Function): void {
+    public setBody(body: any): void {
+        this.body = body;
+    }
 
-        if(!this.getNotification(notificationName)) {
-
-            this.notifications[notificationName] = [];
-            this.notifications[notificationName].push(listener);
-
-        }else {
-
-            this.notifications[notificationName].push(listener);
-
-        }
-
-        this.eventEmitter.on(notificationName, listener);
-
+    public getBody(): string {
+        return this.body;
     }
     
-    public sendNotification(notificationName: string, params: any): void {
-
-        this.eventEmitter.emit(notificationName, params);
-        
-    }
-    
-    public removeListener(notificationName: string): void {
-
-        let listeners: Function[] = this.getNotification(notificationName);
-        if(listeners) {
-            listeners.forEach((listener: Function) => {
-                this.eventEmitter.removeListener(notificationName, listener);
-            });
-        }
-
-    }
-
-    public removeAllListeners(): void {
-
-        this.eventEmitter.removeAllListeners();
-
-    }
-
 }

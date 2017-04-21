@@ -8,6 +8,7 @@ import {LoginCommand} from "../../modules/login/shared/controllers/command/login
 import {LoginFormComponent} from "./form/form.component";
 import {AuthenticationService} from "../../shared/services/authentication.service";
 import {LoginProxy} from "./shared/models/login.proxy";
+import {LoginNotifications} from "./shared/notifications/login.notification";
 
 @NgModule({
     imports: [
@@ -26,9 +27,14 @@ export class LoginModule {
 
     constructor(authenticationService: AuthenticationService) {
 
+        //register services
         Facade.registerService(authenticationService);
-        Facade.registerCommand(LoginCommand);
+
+        //register proxies
         Facade.registerProxy(LoginProxy);
+
+        //register commands
+        Facade.registerCommand(LoginCommand, LoginNotifications.LOGIN);
 
     }
      

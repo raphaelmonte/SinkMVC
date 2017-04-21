@@ -1,27 +1,37 @@
 import {CommandMap} from "./command.map";
 import {IProxy} from "./proxy.interface";
 import {ProxyMap} from "./proxy.map";
-import {Notifications} from "./notification";
+import {Broadcast} from "./broadcast";
 import {ServiceMap} from "./service.map";
 import {IService} from "./service.interface";
+import {Notification} from "./notification";
 
 export class Facade {
 
-    public static notification: Notifications = new Notifications();
     public static commandMaps: CommandMap[] = [];
     public static serviceMaps: ServiceMap[] = [];
     public static proxyMaps: ProxyMap[] = [];
 
-    //Commands
-    public static registerCommand(commandClassRef: any): void {
+    private static broadcast: Broadcast = new Broadcast();
 
-        if(!this.getCommand(commandClassRef)) {
+    //Commands
+    public static registerCommand(commandClassRef: Function, notificationName: string): void {
+
+        let commandMap: CommandMap = this.getCommand(commandClassRef);        
+        if(!commandMap) {
             
             let commandMap = new CommandMap();
             commandMap.name = commandClassRef.name;
             commandMap.commandClassRef = commandClassRef;
+            commandMap.listNotificationInterests = [notificationName];
 
             this.commandMaps.push(commandMap);
+            
+        }else {
+
+            if(commandMap.listNotificationInterests.indexOf(notificationName) < 0) {
+                commandMap.listNotificationInterests.push(notificationName);
+            }
             
         }
 
@@ -38,7 +48,7 @@ export class Facade {
         
     }
 
-    private static getCommandMap(commandClassRef: any): CommandMap {
+    private static getCommandMap(commandClassRef: Function): CommandMap {
 
         for(let i: number = 0 ; i < this.commandMaps.length ; i++) {
             if(this.commandMaps[i].name == commandClassRef.name) {
@@ -159,42 +169,45 @@ export class Facade {
 
         this.commandMaps.forEach((commandMap: CommandMap) => {
 
-            let listNotificationInterests: string[] = commandMap.commandClassRef.listNotificationInterests();
+            let listNotificationInterests: string[] = commandMap.listNotificationInterests;
             if(listNotificationInterests.indexOf(notificationName) >= 0) {
 
                 notificationInterests.push(notificationName);
+                
+                let notification: Notification = new Notification();
+                notification.setName(notificationName);
+                notification.setBody(params);
 
                 let command = new commandMap.commandClassRef();
-                command.setNotificationName(notificationName);
-                command.execute();
+                command.execute(notification);
 
             }
-
+            
         });
 
-        this.notification.sendNotification(notificationName, params);
+        this.broadcast.sendNotification(notificationName, params);
 
         notificationInterests.forEach((notificationName: string) => {
-            this.notification.removeListener(notificationName);
+            this.broadcast.removeListener(notificationName);
         });
 
     }
 
     public static addListener(notificationName: string, listener: Function): void {
 
-        this.notification.addListener(notificationName, listener);
+        this.broadcast.addListener(notificationName, listener);
 
     }
 
     public static removeListener(notificationName: string): void {
 
-        this.notification.removeListener(notificationName);
+        this.broadcast.removeListener(notificationName);
 
     }
 
     public static removeAllListeners(): void {
 
-        this.notification.removeAllListeners();
+        this.broadcast.removeAllListeners();
 
     }
 

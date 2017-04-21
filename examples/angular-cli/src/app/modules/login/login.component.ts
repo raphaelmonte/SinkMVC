@@ -18,8 +18,7 @@ export class LoginComponent {
     
     public ngOnInit(): void {
 
-        this.loginMediator = new LoginMediator();
-        this.loginMediator.setComponent(this.loginFormComponent);
+        this.loginMediator = new LoginMediator(this.loginFormComponent);
 
     }
 

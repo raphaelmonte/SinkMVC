@@ -1,31 +1,17 @@
-import {Command} from "node-broadcast";
-
-import {LoginNotifications} from "../../notifications/login.notification";
+import {Command, ICommand, Facade, INotification} from "node-broadcast";
 import {LoginProxy} from "../../models/login.proxy";
-import {User} from "../../../../../shared/models/user/user.model";
 
-export class LoginCommand extends Command {
+export class LoginCommand extends Command implements ICommand {
 
     constructor() {
         super();
     }
 
     /** @override */
-    public static listNotificationInterests(): string[] {
+    public execute(notification: INotification): void {
 
-        return [
-            LoginNotifications.SET_SERVICE,
-            LoginNotifications.LOGIN
-        ];
-
-    }
-
-    /** @override */
-    public execute(): void {
-
-        let proxy: LoginProxy = new LoginProxy();
-
-        this.addListener(LoginNotifications.LOGIN, (user: User) => proxy.login(user));
+        let proxy: LoginProxy = Facade.getProxy(LoginProxy) as LoginProxy;
+        proxy.login(notification.getBody());
 
     }
 

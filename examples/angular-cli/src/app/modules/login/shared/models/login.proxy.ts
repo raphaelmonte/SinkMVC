@@ -24,17 +24,27 @@ export class LoginProxy extends Proxy {
         try {
 
             let observer: Observable<any> = this.service.login(user)['map']((res: any) => res.json());
-            observer.subscribe(
-                (response: Object) => this.sendNotification(LoginNotifications.SUCCESS_LOGIN, UserFactory.createUser(response)),
-                (response: Object) => this.sendNotification(LoginNotifications.FAILURE_LOGIN, response)
-            );
+            observer.subscribe((response: Object) => this.onSuccessLogin(response),
+                               (response: Object) => this.onFailureLogin(response));
 
         }catch(e) {
 
             console.error(e);
-            this.sendNotification(LoginNotifications.FAILURE_LOGIN, e);
+            this.onFailureLogin(e);
 
         }
+
+    }
+
+    private onSuccessLogin(response: Object) {
+
+        this.sendNotification(LoginNotifications.SUCCESS_LOGIN, UserFactory.createUser(response))
+
+    }
+
+    private onFailureLogin(responseError: any): void {
+
+        this.sendNotification(LoginNotifications.FAILURE_LOGIN, responseError);
 
     }
 

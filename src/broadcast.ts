@@ -1,39 +1,59 @@
-import {Facade} from "./facade";
+import * as events from "events";
 
 export class Broadcast {
 
-    private listeners: string[];
+    private eventEmitter: events.EventEmitter;
+    public notifications: { [notification: string]: Function[] } = {};
 
     constructor() {
 
-        this.listeners = [];
-        this.handleNotification();
+        this.eventEmitter = new events.EventEmitter();
 
     }
 
-    public handleNotification(): void {
+    private getNotification(notification: string): Function[] {
+
+        return this.notifications[notification];
 
     }
 
     public addListener(notificationName: string, listener: Function): void {
 
-        this.listeners.push(notificationName);
+        if(!this.getNotification(notificationName)) {
 
-        Facade.addListener(notificationName, listener.bind(this));
+            this.notifications[notificationName] = [];
+            this.notifications[notificationName].push(listener);
+
+        }else {
+
+            this.notifications[notificationName].push(listener);
+
+        }
+
+        this.eventEmitter.on(notificationName, listener);
 
     }
+    
+    public sendNotification(notificationName: string, params: any): void {
 
-    public sendNotification(notificationName: string, params: any = null): void {
+        this.eventEmitter.emit(notificationName, params);
+        
+    }
+    
+    public removeListener(notificationName: string): void {
 
-        Facade.sendNotification(notificationName, params);
+        let listeners: Function[] = this.getNotification(notificationName);
+        if(listeners) {
+            listeners.forEach((listener: Function) => {
+                this.eventEmitter.removeListener(notificationName, listener);
+            });
+        }
 
     }
 
     public removeAllListeners(): void {
 
-        this.listeners.forEach((notificationName: string) => {
-            Facade.removeListener(notificationName);
-        });
+        this.eventEmitter.removeAllListeners();
 
     }
 

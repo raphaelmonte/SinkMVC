@@ -1,39 +1,14 @@
-import {Facade} from "./facade";
 import {Broadcast} from "./broadcast";
+import {INotification} from "./notification.interface";
 
 export class Command extends Broadcast {
 
-    private notificationName: string;
-    
     constructor() {
         super();
     }
 
-    public static listNotificationInterests(): string[] {
+    public execute(notification: INotification): void {
 
-        return [];
-
-    }
-
-    public execute(): void {
-
-    }
-
-    public setNotificationName(notificationName: string): void {
-
-        this.notificationName = notificationName;
-
-    }
-
-    /** override */
-    public addListener(notificationName: string, listener: Function): void {
-
-        if(this.notificationName == notificationName) {
-
-            Facade.addListener(notificationName, listener.bind(this));
-
-        }
-        
     }
 
 }

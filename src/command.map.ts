@@ -2,6 +2,7 @@ export class CommandMap {
 
     private _name: string;
     private _commandClassRef: any;
+    private _listNotificationInterests: string[];
 
     get name():string {
         return this._name;
@@ -17,6 +18,14 @@ export class CommandMap {
 
     set commandClassRef(value:any) {
         this._commandClassRef = value;
+    }
+
+    get listNotificationInterests():string[] {
+        return this._listNotificationInterests;
+    }
+
+    set listNotificationInterests(value:Array) {
+        this._listNotificationInterests = value;
     }
     
 }

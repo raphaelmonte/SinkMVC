@@ -8,16 +8,14 @@ export class LoginMediator extends Mediator implements IMediator {
 
     private loginFormComponent: LoginFormComponent;
 
-    constructor() {
+    constructor(loginFormComponent: LoginFormComponent) {
+        
         super();
-    }
-
-    public setComponent(loginFormComponent: LoginFormComponent): void {
 
         this.loginFormComponent = loginFormComponent;
 
         this.subscribe(loginFormComponent.onLogin, this.onLogin);
-
+        
     }
 
     private onLogin(): void {
@@ -28,7 +26,7 @@ export class LoginMediator extends Mediator implements IMediator {
 
     /** @override */
     public handleNotification(): void {
-    
+
         this.addListener(LoginNotifications.SUCCESS_LOGIN, this.onSuccessLogin);
         this.addListener(LoginNotifications.FAILURE_LOGIN, this.onFailureLogin);
     
@@ -36,6 +34,7 @@ export class LoginMediator extends Mediator implements IMediator {
 
     private onSuccessLogin(): void {
 
+        // this.loginFormComponent.usuario.id_usuario
         console.log('onSuccessLogin');
         //TODO: onSuccessLogin
 

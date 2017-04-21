@@ -9,6 +9,8 @@ import {Component, Output, EventEmitter} from "@angular/core";
 export class LoginFormComponent {
 
     @Output() onLogin: EventEmitter<null>;
+    
+    public usuario: any = { id_usuario: 1};
 
     constructor() {
 
