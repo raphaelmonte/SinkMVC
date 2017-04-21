@@ -15,7 +15,7 @@ export class Facade {
     private static broadcast: Broadcast = new Broadcast();
 
     //Commands
-    public static registerCommand(commandClassRef: Function, notificationName: string): void {
+    public static registerCommand(notificationName: string, commandClassRef: Function): void {
 
         let commandMap: CommandMap = this.getCommand(commandClassRef);        
         if(!commandMap) {
@@ -61,7 +61,7 @@ export class Facade {
     }
 
     //Proxy
-    public static registerProxy(proxy: any): void {
+    public static registerProxy(proxy: any, realSubject?: any): void {
 
         if(!this.getProxyMap(proxy)) {
 
@@ -72,6 +72,10 @@ export class Facade {
             if(typeof proxy != "object") {
                 serviceName = proxy.name;
                 instance = new proxy();
+                
+                if(realSubject) {
+                    instance = new proxy(realSubject);
+                }
             }
 
             proxyMap.name = serviceName;
@@ -83,7 +87,17 @@ export class Facade {
 
     }
 
-    public static getProxy(proxy: any): IProxy {
+    public static hasProxy(proxy: any): boolean {
+
+        if(this.getProxy(proxy)) {
+            return true;
+        }
+
+        return false;
+
+    }
+
+    public static getProxy(proxy: any): any {
 
         let proxyMap: ProxyMap = this.getProxyMap(proxy);
         if(proxyMap) {
