@@ -17,7 +17,7 @@ export class Facade {
     //Commands
     public static registerCommand(notificationName: string, commandClassRef: Function): void {
 
-        let commandMap: CommandMap = this.getCommand(commandClassRef);        
+        let commandMap: CommandMap = this.getCommandMap(commandClassRef);
         if(!commandMap) {
             
             let commandMap = new CommandMap();
@@ -189,6 +189,7 @@ export class Facade {
                 notification.setBody(params);
 
                 let command = new commandMap.commandClassRef();
+                command.setNotificationName(notificationName);
                 command.execute(notification);
 
             }

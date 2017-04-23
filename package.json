@@ -1,6 +1,6 @@
 {
   "name": "node-broadcast",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "description": "MVC library using node events. Get better architecture in your javascript applications by creating Models, Commands, Mediators and Proxys.",
   "main": "index.js",
   "scripts": {
