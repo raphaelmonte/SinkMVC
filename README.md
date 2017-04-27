@@ -1,8 +1,6 @@
-# Node Broadcast
+# Sink MVC Typescript Framework
 
-This library is an adaptation of PureMVC using node events.
-Get better architecture in your javascript applications by
-creating Models, Commands, Mediators and Proxys.
+SinkMVC is a lightweight framework for apply GoF patterns.
 
 ## Getting Started
 
@@ -11,7 +9,7 @@ The example of this project was generated with [Angular CLI](https://github.com/
 ## Install
 
 ```
-npm install node-broadcast --save
+npm install sinkmvc --save
 ```
 
 ## License
