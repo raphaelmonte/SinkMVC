@@ -34,7 +34,7 @@ export class Broadcast {
 
     }
     
-    public sendNotification(notificationName: string, params: any): void {
+    public sendNotification(notificationName: string, params?: any): void {
 
         this.eventEmitter.emit(notificationName, params);
         

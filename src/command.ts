@@ -27,4 +27,11 @@ export class Command extends Broadcast {
 
     }
 
+    /** @override  */
+    public sendNotification(notificationName: string, params?: any): void {
+
+        Facade.sendNotification(notificationName, params);
+
+    }
+
 }

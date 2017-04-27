@@ -173,7 +173,7 @@ export class Facade {
     }
 
     //Broadcast
-    public static sendNotification(notificationName: string, params: any): void {
+    public static sendNotification(notificationName: string, params?: any): void {
 
         let notificationInterests: string[] = [];
 

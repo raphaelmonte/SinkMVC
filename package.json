@@ -1,7 +1,7 @@
 {
-  "name": "node-broadcast",
-  "version": "0.2.3",
-  "description": "MVC library using node events. Get better architecture in your javascript applications by creating Models, Commands, Mediators and Proxys.",
+  "name": "sinkmvc",
+  "version": "0.0.1",
+  "description": "SinkMVC TypeScript Framework",
   "main": "index.js",
   "scripts": {
     "watch": "ntsc -p src -w",
@@ -9,21 +9,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/raphaelmonte/node-broadcast.git"
+    "url": "git+https://github.com/raphaelmonte/sinkmvc.git"
   },
   "keywords": [
     "node",
     "broadcast",
-    "notification",
+    "sink",
     "mvc",
     "typescript"
   ],
   "author": "raphaelmontesantos@gmail.com",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/raphaelmonte/node-broadcast/issues"
+    "url": "https://github.com/raphaelmonte/sinkmvc/issues"
   },
-  "homepage": "https://github.com/raphaelmonte/node-broadcast#readme",
+  "homepage": "https://github.com/raphaelmonte/sinkmvc#readme",
   "devDependencies": {
     "@types/node": "^7.0.12",
     "typescript": "^1.8.10",
