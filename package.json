@@ -12,8 +12,7 @@
     "url": "git+https://github.com/raphaelmonte/sinkmvc.git"
   },
   "keywords": [
-    "node",
-    "broadcast",
+    "notification",
     "sink",
     "mvc",
     "typescript"
