@@ -1,45 +1,21 @@
-import {Http} from '@angular/http';
 import {User} from "../models/user/user.model";
-import {Observable} from "rxjs/Rx";
 import {Injectable} from "@angular/core";
 
 @Injectable()
 export class AuthenticationService {
 
-    private http: Http;
+    constructor() {}
 
-    constructor(http: Http) {
-
-        this.http = http;
-
-    }
-
-    // ---- Authentication
-    public login(user: User): Observable<Object> {
-
-        //TODO: login with user
-        return this.http.get('assets/data/user.json');
-
-    }
-
-    public logout(): void {
-
-        sessionStorage.removeItem('rm-token');
-        localStorage.removeItem("rm-user");
-
-    }
-
-    // ---- Storage
     public setSessionUser(user: User): void {
 
         let storage: string = JSON.stringify(user);
-        localStorage.setItem('rm-user', storage);
+        localStorage.setItem('sinkmvc-user', storage);
 
     }
 
     public getSessionUser(): User {
 
-        let storage: string = localStorage.getItem("rm-user");
+        let storage: string = localStorage.getItem("sinkmvc-user");
         let data: Object = JSON.parse(storage);
         let user: User = new User(data);
 
@@ -49,14 +25,21 @@ export class AuthenticationService {
 
     public setToken(token: string): void {
 
-        sessionStorage.setItem('rm-token', token);
+        sessionStorage.setItem('sinkmvc-token', token);
 
     }
 
     public getToken(): string {
 
-        let token: string = sessionStorage.getItem('rm-token');
+        let token: string = sessionStorage.getItem('sinkmvc-token');
         return token;
+
+    }
+
+    public logout(): void {
+
+        localStorage.clear();
+        sessionStorage.clear();
 
     }
 

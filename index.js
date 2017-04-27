@@ -1,5 +1,5 @@
-exports.Command = require('./build/command').Command;
-exports.Model = require('./build/model').Model;
-exports.Proxy = require('./build/proxy').Proxy;
-exports.Facade = require('./build/facade').Facade;
-exports.Mediator = require('./build/mediator').Mediator;
+exports.Command = require('./build/patterns/command/command').Command;
+exports.Proxy = require('./build/patterns/proxy/proxy').Proxy;
+exports.Mediator = require('./build/patterns/mediator/mediator').Mediator;
+exports.Facade = require('./build/patterns/facade/facade').Facade;
+exports.Model = require('./build/models/model').Model;

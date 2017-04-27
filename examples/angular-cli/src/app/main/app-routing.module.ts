@@ -6,10 +6,10 @@ export const routes: Routes = [
 
     // App views
     {path: 'login', loadChildren: 'app/modules/login/login.module#LoginModule'},
-    {path: 'home', loadChildren: 'app/modules/home/home.module#HomeModule'},
+    {path: 'home', loadChildren: 'app/modules/home/home.module#HomeModule'}
 
     // Handle all other routes
-    // {path: '**',    component: HomeComponent }
+    // {path: '**', component: Component }
 ];
 
 @NgModule({
