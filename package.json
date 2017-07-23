@@ -1,6 +1,6 @@
 {
     "name": "sinkmvc",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "SinkMVC TypeScript Framework",
     "main": "index.js",
     "scripts": {
