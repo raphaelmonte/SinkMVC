@@ -47,9 +47,9 @@ export class Broadcast {
             listeners.forEach((listener: Function) => {
                 this.eventEmitter.removeListener(notificationName, listener);
             });
+
+            this.notifications[notificationName] = [];
         }
-        
-        this.notifications[notificationName] = [];
 
     }
 
