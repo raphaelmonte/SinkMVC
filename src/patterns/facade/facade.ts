@@ -10,7 +10,7 @@ export class Facade {
 
     private static broadcast: Broadcast = new Broadcast();
     
-    public static registerCommand(notificationName: string, commandClassRef: Function): void {
+    public static registerCommand(notificationName: string, commandClassRef: any): void {
 
         let commandMap: CommandMap = this.getCommandMap(commandClassRef);
         if(!commandMap) {
@@ -32,7 +32,7 @@ export class Facade {
 
     }
     
-    public static getCommand(commandClassRef: Function): any {
+    public static getCommand(commandClassRef: any): any {
 
         let commandMaps: CommandMap = this.getCommandMap(commandClassRef);
         if(commandMaps) {
@@ -43,7 +43,7 @@ export class Facade {
         
     }
 
-    private static getCommandMap(commandClassRef: Function): CommandMap {
+    private static getCommandMap(commandClassRef: any): CommandMap {
 
         for(let i: number = 0 ; i < this.commandMaps.length ; i++) {
             if(this.commandMaps[i].name == commandClassRef.name) {

@@ -11,9 +11,9 @@ export class Broadcast {
 
     }
 
-    private getNotification(notification: string): Function[] {
+    private getNotification(notificationName: string): Function[] {
 
-        return this.notifications[notification];
+        return this.notifications[notificationName];
 
     }
 
@@ -48,6 +48,8 @@ export class Broadcast {
                 this.eventEmitter.removeListener(notificationName, listener);
             });
         }
+        
+        this.notifications[notificationName] = [];
 
     }
 
