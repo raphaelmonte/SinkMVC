@@ -3,7 +3,11 @@ import * as events from "events";
 export class Broadcast {
 
     private eventEmitter: events.EventEmitter;
-    public notifications: { [notification: string]: Function[] } = {};
+    public mediators: {
+        [mediatorName: string]: {
+            [notificationName: string]: Function
+        }
+    } = {};
 
     constructor() {
 
@@ -11,51 +15,51 @@ export class Broadcast {
 
     }
 
-    private getNotification(notificationName: string): Function[] {
+    private getMediator(mediatorName: string): Object {
 
-        return this.notifications[notificationName];
+        if (!this.mediators[mediatorName]) {
+            this.mediators[mediatorName] = {};
+        }
+
+        return this.mediators[mediatorName];
 
     }
 
-    public addListener(notificationName: string, listener: Function): void {
+    public addListener(notificationName: string, listener: Function, mediatorName: string): void {
 
-        if(!this.getNotification(notificationName)) {
-
-            this.notifications[notificationName] = [];
-            this.notifications[notificationName].push(listener);
-
-        }else {
-
-            this.notifications[notificationName].push(listener);
-
-        }
+        let mediator = this.getMediator(mediatorName);
+        mediator[notificationName] = listener;
 
         this.eventEmitter.on(notificationName, listener);
 
     }
-    
+
     public sendNotification(notificationName: string, params?: any): void {
 
         this.eventEmitter.emit(notificationName, params);
-        
+
     }
-    
-    public removeListener(notificationName: string): void {
 
-        let listeners: Function[] = this.getNotification(notificationName);
-        if(listeners) {
-            listeners.forEach((listener: Function) => {
-                this.eventEmitter.removeListener(notificationName, listener);
-            });
+    public removeListener(notificationName: string, mediatorName: string): void {
 
-            this.notifications[notificationName] = [];
+        let mediator = this.getMediator(mediatorName);
+        let listener: Function = mediator[notificationName];
+        if (listener) {
+            this.eventEmitter.removeListener(notificationName, listener);
+            delete mediator[notificationName];
         }
 
     }
 
-    public removeAllListeners(): void {
+    public removeAllListeners(mediatorName: string): void {
 
-        this.eventEmitter.removeAllListeners();
+        let mediator = this.getMediator(mediatorName);
+
+        for (let notificationName in mediator) {
+            let listener = mediator[notificationName];
+            this.eventEmitter.removeListener(notificationName, listener);
+            delete mediator[notificationName];
+        }
 
     }
 

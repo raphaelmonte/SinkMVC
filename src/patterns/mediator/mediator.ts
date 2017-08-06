@@ -2,11 +2,8 @@ import {Facade} from "../facade/facade";
 
 export class Mediator {
 
-    private listeners: string[];
-
     constructor() {
 
-        this.listeners = [];
         this.handleNotification();
 
     }
@@ -17,9 +14,7 @@ export class Mediator {
 
     public addListener(notificationName: string, listener: Function): void {
 
-        this.listeners.push(notificationName);
-
-        Facade.addListener(notificationName, listener.bind(this));
+        Facade.addListener(notificationName, listener.bind(this), this.constructor['name']);
 
     }
 
@@ -29,11 +24,15 @@ export class Mediator {
 
     }
 
+    public removeListener(notificationName: string): void {
+
+        Facade.removeListener(notificationName, this.constructor['name']);
+
+    }
+
     public removeAllListeners(): void {
 
-        this.listeners.forEach((notificationName: string) => {
-            Facade.removeListener(notificationName);
-        });
+        Facade.removeAllListeners(this.constructor['name']);
 
     }
 

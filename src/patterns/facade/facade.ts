@@ -117,21 +117,16 @@ export class Facade {
 
     public static sendNotification(notificationName: string, params?: any): void {
 
-        let notificationInterests: string[] = [];
-
         this.commandMaps.forEach((commandMap: CommandMap) => {
 
             let listNotificationInterests: string[] = commandMap.listNotificationInterests;
             if(listNotificationInterests.indexOf(notificationName) >= 0) {
 
-                notificationInterests.push(notificationName);
-                
                 let notification: Notification = new Notification();
                 notification.setName(notificationName);
                 notification.setBody(params);
 
                 let command = new commandMap.commandClassRef();
-                command.setNotificationName(notificationName);
                 command.execute(notification);
 
             }
@@ -140,27 +135,23 @@ export class Facade {
 
         this.broadcast.sendNotification(notificationName, params);
 
-        notificationInterests.forEach((notificationName: string) => {
-            this.broadcast.removeListener(notificationName);
-        });
+    }
+
+    public static addListener(notificationName: string, listener: Function, mediatorName: string): void {
+
+        this.broadcast.addListener(notificationName, listener, mediatorName);
 
     }
 
-    public static addListener(notificationName: string, listener: Function): void {
+    public static removeListener(notificationName: string, mediatorName: string): void {
 
-        this.broadcast.addListener(notificationName, listener);
-
-    }
-
-    public static removeListener(notificationName: string): void {
-
-        this.broadcast.removeListener(notificationName);
+        this.broadcast.removeListener(notificationName, mediatorName);
 
     }
 
-    public static removeAllListeners(): void {
+    public static removeAllListeners(mediatorName: string): void {
 
-        this.broadcast.removeAllListeners();
+        this.broadcast.removeAllListeners(mediatorName);
 
     }
 

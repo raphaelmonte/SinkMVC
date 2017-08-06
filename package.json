@@ -1,6 +1,6 @@
 {
     "name": "sinkmvc",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "SinkMVC TypeScript Framework",
     "main": "index.js",
     "scripts": {
@@ -29,6 +29,6 @@
         "ntsc": "^0.2.0"
     },
     "dependencies": {
-        "events": "^1.1.1"
+        "events": "1.1.1"
     }
 }
