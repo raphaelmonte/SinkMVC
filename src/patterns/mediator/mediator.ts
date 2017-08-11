@@ -2,9 +2,11 @@ import {Facade} from "../facade/facade";
 
 export class Mediator {
 
-    static NAME: string = Facade.createRandomNames('mediator-');
+    static NAME: string;
 
     constructor() {
+
+        this.constructor['NAME'] = Facade.createRandomNames('mediator-');
 
         this.handleNotification();
 
@@ -16,7 +18,7 @@ export class Mediator {
 
     public addListener(notificationName: string, listener: Function): void {
 
-        Facade.addListener(notificationName, listener.bind(this), this.constructor['name']);
+        Facade.addListener(notificationName, listener.bind(this), this.constructor['NAME']);
 
     }
 
@@ -28,13 +30,13 @@ export class Mediator {
 
     public removeListener(notificationName: string): void {
 
-        Facade.removeListener(notificationName, this.constructor['name']);
+        Facade.removeListener(notificationName, this.constructor['NAME']);
 
     }
 
     public removeAllListeners(): void {
 
-        Facade.removeAllListeners(this.constructor['name']);
+        Facade.removeAllListeners(this.constructor['NAME']);
 
     }
 

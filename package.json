@@ -1,10 +1,10 @@
 {
     "name": "sinkmvc",
-    "version": "0.0.8",
+    "version": "0.1.0",
     "description": "SinkMVC TypeScript Framework",
     "main": "index.js",
     "scripts": {
-        "build": "node_modules/typescript/bin/tsc --p tsconfig.json"
+        "build": "./node_modules/typescript/bin/tsc --p tsconfig.json"
     },
     "repository": {
         "type": "git",

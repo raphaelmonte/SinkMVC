@@ -63,6 +63,8 @@ export class Broadcast {
             this.removeListener(notificationName, mediatorName);
         }
 
+        delete this.mediators[mediatorName];
+
     }
 
 }
