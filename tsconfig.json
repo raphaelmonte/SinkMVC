@@ -6,8 +6,16 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "removeComments": true,
-    "sourceMap": true,
-    "outDir": "../build",
+    "sourceMap": false,
+    "outDir": "./build",
     "declaration": true
-  }
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "index"
+  ]
 }
