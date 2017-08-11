@@ -1,4 +1,5 @@
 import {Facade} from "../facade/facade";
+import {Util} from "../util/util";
 
 export class Mediator {
 
@@ -6,7 +7,7 @@ export class Mediator {
 
     constructor() {
 
-        this.constructor['NAME'] = Facade.createRandomNames('mediator-');
+        this.constructor['NAME'] = Util.createRandomNames('mediator-');
 
         this.handleNotification();
 
