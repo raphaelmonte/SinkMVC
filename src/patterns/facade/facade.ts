@@ -9,44 +9,44 @@ export class Facade {
     public static proxyMaps: ProxyMap[] = [];
 
     private static broadcast: Broadcast = new Broadcast();
-    
+
     public static registerCommand(notificationName: string, commandClassRef: any): void {
 
         let commandMap: CommandMap = this.getCommandMap(commandClassRef);
-        if(!commandMap) {
-            
+        if (!commandMap) {
+
             let commandMap = new CommandMap();
-            commandMap.name = commandClassRef.name;
+            commandMap.name = commandClassRef.NAME;
             commandMap.commandClassRef = commandClassRef;
             commandMap.listNotificationInterests = [notificationName];
 
             this.commandMaps.push(commandMap);
-            
-        }else {
 
-            if(commandMap.listNotificationInterests.indexOf(notificationName) < 0) {
+        } else {
+
+            if (commandMap.listNotificationInterests.indexOf(notificationName) < 0) {
                 commandMap.listNotificationInterests.push(notificationName);
             }
-            
+
         }
 
     }
-    
+
     public static getCommand(commandClassRef: any): any {
 
         let commandMaps: CommandMap = this.getCommandMap(commandClassRef);
-        if(commandMaps) {
+        if (commandMaps) {
             return commandMaps.commandClassRef;
         }
 
         return null;
-        
+
     }
 
     private static getCommandMap(commandClassRef: any): CommandMap {
 
-        for(let i: number = 0 ; i < this.commandMaps.length ; i++) {
-            if(this.commandMaps[i].name == commandClassRef.name) {
+        for (let i: number = 0; i < this.commandMaps.length; i++) {
+            if (this.commandMaps[i].name == commandClassRef.NAME) {
                 return this.commandMaps[i];
             }
         }
@@ -55,21 +55,13 @@ export class Facade {
 
     }
 
-    public static registerProxy(proxy: any, realSubject?: any): void {
+    public static registerProxy(proxyClassRef: any, realSubject?: any): void {
 
-        if(!this.getProxyMap(proxy)) {
+        if (!this.getProxyMap(proxyClassRef)) {
 
             let proxyMap: ProxyMap = new ProxyMap();
-            let proxyName: string = proxy.constructor.name;
-            let instance = proxy;
-
-            if(typeof proxy != "object") {
-                proxyName = proxy.name;
-                instance = new proxy(realSubject);
-            }
-
-            proxyMap.name = proxyName;
-            proxyMap.instance = instance;
+            proxyMap.name = proxyClassRef.NAME;
+            proxyMap.instance = new proxyClassRef(realSubject);
 
             this.proxyMaps.push(proxyMap);
 
@@ -77,9 +69,9 @@ export class Facade {
 
     }
 
-    public static hasProxy(proxy: any): boolean {
+    public static hasProxy(proxyClassRef: any): boolean {
 
-        if(this.getProxy(proxy)) {
+        if (this.getProxy(proxyClassRef)) {
             return true;
         }
 
@@ -87,26 +79,21 @@ export class Facade {
 
     }
 
-    public static getProxy(proxy: any): any {
+    public static getProxy(proxyClassRef: any): any {
 
-        let proxyMap: ProxyMap = this.getProxyMap(proxy);
-        if(proxyMap) {
+        let proxyMap: ProxyMap = this.getProxyMap(proxyClassRef);
+        if (proxyMap) {
             return proxyMap.instance;
         }
 
         return null;
-        
+
     }
 
-    private static getProxyMap(proxy: any): ProxyMap {
+    private static getProxyMap(proxyClassRef: any): ProxyMap {
 
-        let proxyName: string = proxy.constructor.name;
-        if(typeof proxy != "object") {
-            proxyName = proxy.name;
-        }
-
-        for(let i: number = 0 ; i < this.proxyMaps.length ; i++) {
-            if(this.proxyMaps[i].name == proxyName) {
+        for (let i: number = 0; i < this.proxyMaps.length; i++) {
+            if (this.proxyMaps[i].name == proxyClassRef.NAME) {
                 return this.proxyMaps[i];
             }
         }
@@ -120,7 +107,7 @@ export class Facade {
         this.commandMaps.forEach((commandMap: CommandMap) => {
 
             let listNotificationInterests: string[] = commandMap.listNotificationInterests;
-            if(listNotificationInterests.indexOf(notificationName) >= 0) {
+            if (listNotificationInterests.indexOf(notificationName) >= 0) {
 
                 let notification: Notification = new Notification();
                 notification.setName(notificationName);
@@ -130,7 +117,7 @@ export class Facade {
                 command.execute(notification);
 
             }
-            
+
         });
 
         this.broadcast.sendNotification(notificationName, params);
@@ -152,6 +139,19 @@ export class Facade {
     public static removeAllListeners(mediatorName: string): void {
 
         this.broadcast.removeAllListeners(mediatorName);
+
+    }
+
+    public static createRandomNames(prefix: string): string {
+
+        let id = prefix;
+        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
+        for (let i = 0; i < 8; i++) {
+            id += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
+
+        return id;
 
     }
 

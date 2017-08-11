@@ -28,6 +28,10 @@ export class Broadcast {
     public addListener(notificationName: string, listener: Function, mediatorName: string): void {
 
         let mediator = this.getMediator(mediatorName);
+        if(mediator[notificationName]) {
+            this.removeListener(notificationName, mediatorName);
+        }
+
         mediator[notificationName] = listener;
 
         this.eventEmitter.on(notificationName, listener);
@@ -56,9 +60,7 @@ export class Broadcast {
         let mediator = this.getMediator(mediatorName);
 
         for (let notificationName in mediator) {
-            let listener = mediator[notificationName];
-            this.eventEmitter.removeListener(notificationName, listener);
-            delete mediator[notificationName];
+            this.removeListener(notificationName, mediatorName);
         }
 
     }

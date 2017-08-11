@@ -4,6 +4,8 @@ import {ICommand} from "../../models/interfaces/command.interface";
 
 export class Command implements ICommand {
 
+    static NAME: string = Facade.createRandomNames('command-');
+
     public execute(notification: INotification): void {}
 
     /** @override  */

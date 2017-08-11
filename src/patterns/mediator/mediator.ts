@@ -2,6 +2,8 @@ import {Facade} from "../facade/facade";
 
 export class Mediator {
 
+    static NAME: string = Facade.createRandomNames('mediator-');
+
     constructor() {
 
         this.handleNotification();
