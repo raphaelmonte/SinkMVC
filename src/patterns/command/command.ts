@@ -5,9 +5,13 @@ import {Util} from "../util/util";
 
 export class Command implements ICommand {
 
-    static NAME: string = Util.createRandomNames('command-');
+    static NAME: string;
 
-    public execute(notification: INotification): void {}
+    public execute(notification: INotification): void {
+
+        this.constructor['NAME'] = Util.createRandomNames('command-');
+
+    }
 
     /** @override  */
     public sendNotification(notificationName: string, params?: any): void {
