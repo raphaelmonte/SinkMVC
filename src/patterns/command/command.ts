@@ -7,9 +7,13 @@ export class Command implements ICommand {
 
     static NAME: string;
 
-    public execute(notification: INotification): void {
+    constructor() {
 
         this.constructor['NAME'] = Util.createRandomNames('command-');
+
+    }
+
+    public execute(notification: INotification): void {
 
     }
 
