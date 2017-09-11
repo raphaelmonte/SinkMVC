@@ -13,14 +13,14 @@ export class Command implements ICommand {
 
     }
 
-    public execute(notification: INotification): void {
+    public execute(notification?: INotification): any {
 
     }
 
     /** @override  */
     public sendNotification(notificationName: string, params?: any): void {
 
-        Facade.sendNotification(notificationName, params);
+        Facade.sendNotification(notificationName, params, this);
 
     }
 

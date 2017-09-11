@@ -7,7 +7,7 @@ export class Proxy {
 
     public sendNotification(notificationName: string, params?: any): void {
 
-        Facade.sendNotification(notificationName, params);
+        Facade.sendNotification(notificationName, params, this);
 
     }
 

@@ -25,7 +25,7 @@ export class Mediator {
 
     public sendNotification(notificationName: string, params?: any): void {
 
-        Facade.sendNotification(notificationName, params);
+        Facade.sendNotification(notificationName, params, this);
 
     }
 

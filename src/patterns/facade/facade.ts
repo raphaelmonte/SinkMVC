@@ -3,6 +3,7 @@ import {ProxyMap} from "../../models/proxy.map";
 import {Broadcast} from "../observer/broadcast";
 import {Notification} from "../observer/notification";
 
+
 export class Facade {
 
     public static commandMaps: CommandMap[] = [];
@@ -102,20 +103,19 @@ export class Facade {
 
     }
 
-    public static sendNotification(notificationName: string, params?: any): void {
+    public static sendNotification(notificationName: string, params?: any, target?: any): void {
+
+        let notification: Notification = new Notification();
+        notification.setName(notificationName);
+        notification.setBody(params);
+        notification.setTarget(target);
 
         this.commandMaps.forEach((commandMap: CommandMap) => {
 
             let listNotificationInterests: string[] = commandMap.listNotificationInterests;
             if (listNotificationInterests.indexOf(notificationName) >= 0) {
-
-                let notification: Notification = new Notification();
-                notification.setName(notificationName);
-                notification.setBody(params);
-
                 let command = new commandMap.commandClassRef();
                 command.execute(notification);
-
             }
 
         });
