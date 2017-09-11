@@ -7,16 +7,20 @@ export class Command implements ICommand {
 
     static NAME: string;
 
-    public execute(notification: INotification): void {
+    constructor() {
 
         this.constructor['NAME'] = Util.createRandomNames('command-');
+
+    }
+
+    public execute(notification?: INotification): any {
 
     }
 
     /** @override  */
     public sendNotification(notificationName: string, params?: any): void {
 
-        Facade.sendNotification(notificationName, params);
+        Facade.sendNotification(notificationName, params, this);
 
     }
 
