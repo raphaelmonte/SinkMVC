@@ -2,16 +2,19 @@ import {CommandMap} from "../../models/command.map";
 import {ProxyMap} from "../../models/proxy.map";
 import {Broadcast} from "../observer/broadcast";
 import {Notification} from "../observer/notification";
-
+import {Util} from "../util/util";
 
 export class Facade {
 
-    public static commandMaps: CommandMap[] = [];
-    public static proxyMaps: ProxyMap[] = [];
-
+    private static commandMaps: CommandMap[] = [];
+    private static proxyMaps: ProxyMap[] = [];
     private static broadcast: Broadcast = new Broadcast();
 
     public static registerCommand(notificationName: string, commandClassRef: any): void {
+
+        if(!commandClassRef.NAME) {
+            commandClassRef.NAME = Util.createRandomNames('command-');
+        }
 
         let commandMap: CommandMap = this.getCommandMap(commandClassRef);
         if (!commandMap) {
@@ -57,6 +60,10 @@ export class Facade {
     }
 
     public static registerProxy(proxyClassRef: any, realSubject?: any): void {
+
+        if(!proxyClassRef.NAME) {
+            proxyClassRef.NAME = Util.createRandomNames('proxy-');
+        }
 
         if (!this.getProxyMap(proxyClassRef)) {
 
