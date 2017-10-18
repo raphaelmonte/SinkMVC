@@ -1,6 +1,6 @@
-# Sink MVC Typescript Framework
+# Sink MVC Typescript Library
 
-SinkMVC is a lightweight framework for apply GoF patterns.
+SinkMVC is a library to apply GoF patterns.
 
 ## Install
 

@@ -127,7 +127,7 @@ export class Facade {
 
         });
 
-        this.broadcast.sendNotification(notificationName, params);
+        this.broadcast.sendNotification(notificationName, notification);
 
     }
 

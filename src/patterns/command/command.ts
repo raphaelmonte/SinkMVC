@@ -4,6 +4,8 @@ import {ICommand} from "../../models/interfaces/command.interface";
 
 export class Command implements ICommand {
 
+    public static NAME: string;
+
     public execute(notification?: INotification): any {
 
     }
